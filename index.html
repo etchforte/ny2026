@@ -21,57 +21,60 @@
         .header { text-align: center; margin-bottom: 30px; padding: 20px 0; }
         .header h1 { font-size: 1.8rem; font-weight: 900; color: var(--ny-black); margin: 0; }
 
-        .timeline { max-width: 500px; margin: 0 auto; }
+        /* Password Section */
+        #login-section {
+            max-width: 400px; margin: 100px auto; text-align: center;
+            background: var(--card-bg); padding: 40px 20px; border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); color: white;
+        }
+        .pw-input { 
+            width: 80%; padding: 15px; font-size: 1.2rem; text-align: center;
+            border-radius: 12px; border: 1px solid var(--ny-yellow);
+            background: #1c1c1e; color: white; margin-bottom: 20px;
+            letter-spacing: 5px;
+        }
+        .pw-btn {
+            width: 80%; padding: 15px; background: var(--ny-yellow); color: black;
+            border: none; border-radius: 12px; font-weight: 800; cursor: pointer;
+        }
 
+        /* Main Content (Hidden by default) */
+        #main-content { display: none; }
+
+        .timeline { max-width: 500px; margin: 0 auto; }
         .day-card {
             background: var(--card-bg); border-radius: 22px; margin-bottom: 20px;
             padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1); color: white;
         }
-        
         .date-label { 
             font-weight: 800; color: var(--ny-yellow); margin-bottom: 15px; 
             display: inline-block; border-bottom: 2px solid var(--ny-yellow); 
             padding-bottom: 4px; font-size: 1.1rem;
         }
-        
         .schedule-item { 
             display: flex; justify-content: space-between; align-items: center;
             padding: 15px; border-radius: 15px; background: rgba(255,255,255,0.05); 
-            margin-bottom: 10px; cursor: pointer; transition: 0.3s;
+            margin-bottom: 10px; cursor: pointer;
         }
-        .schedule-item:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
-        
-        .info-area { flex-grow: 1; }
         .time { font-size: 0.85rem; color: var(--ny-yellow); font-weight: 700; }
         .task { font-size: 1.05rem; font-weight: 600; display: block; margin-top: 4px; color: #eee; }
-        
         .edit-icon { padding: 10px; margin-left: 10px; font-size: 1rem; border-radius: 50%; background: rgba(255,255,255,0.1); cursor: pointer; }
         .empty-day { color: #888; font-style: italic; font-size: 0.9rem; padding: 12px; display: flex; justify-content: space-between; align-items: center;}
 
-        /* Floating Add Button */
-        .add-btn-container {
-            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-            width: 90%; max-width: 500px; z-index: 900;
-        }
-        .add-main-btn {
-            width: 100%; padding: 18px; background: var(--ny-black); color: var(--ny-yellow);
-            border: none; border-radius: 18px; font-weight: 900; font-size: 1.1rem;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4); cursor: pointer;
-        }
+        .add-btn-container { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 500px; z-index: 900; }
+        .add-main-btn { width: 100%; padding: 18px; background: var(--ny-black); color: var(--ny-yellow); border: none; border-radius: 18px; font-weight: 900; box-shadow: 0 10px 20px rgba(0,0,0,0.4); cursor: pointer; }
 
         /* Modal */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
-        .modal-content { background: #2c2c2e; padding: 25px; border-radius: 25px; width: 90%; max-width: 400px; color: white; border: 1px solid rgba(255,255,255,0.1); }
-        textarea, input { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #444; border-radius: 12px; background: #1c1c1e; color: white; font-size: 1rem; }
-        .save-btn { width: 100%; padding: 15px; background: var(--ny-yellow); color: black; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; }
-        
+        .modal-content { background: #2c2c2e; padding: 25px; border-radius: 25px; width: 90%; max-width: 400px; color: white; }
+        textarea, input { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #444; border-radius: 12px; background: #1c1c1e; color: white; }
+        .save-btn { width: 100%; padding: 15px; background: var(--ny-yellow); color: black; border: none; border-radius: 12px; font-weight: 800; }
         .btn-group { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
-        .action-link { display: block; text-align: center; padding: 14px; background: #3a3a3c; color: white; text-decoration: none; border-radius: 12px; font-weight: 700; border: 1px solid #48484a; }
-        .map-link { background: #2e7d32; border: none; }
-        .web-link { background: var(--ny-yellow); color: black; border: none; }
-        .img-link { background: #1a73e8; border: none; }
+        .action-link { display: block; text-align: center; padding: 14px; background: #3a3a3c; color: white; text-decoration: none; border-radius: 12px; font-weight: 700; }
+        .map-link { background: #2e7d32; }
+        .web-link { background: var(--ny-yellow); color: black; }
+        .img-link { background: #1a73e8; }
     </style>
 </head>
 <body>
@@ -80,17 +83,26 @@
     <h1>지우네 가족 미국여행 2026🗽</h1>
 </div>
 
-<div class="timeline" id="timeline"></div>
+<div id="login-section">
+    <h2 style="color: var(--ny-yellow); margin-top: 0;">Access Denied</h2>
+    <p>여행 일정을 보려면 암호를 입력하세요.</p>
+    <input type="password" id="password" class="pw-input" placeholder="****" maxlength="4">
+    <br>
+    <button class="pw-btn" onclick="checkPassword()">인증하기</button>
+</div>
 
-<div class="add-btn-container">
-    <button class="add-main-btn" onclick="openAddModal()">＋ 새 일정 추가하기</button>
+<div id="main-content">
+    <div class="timeline" id="timeline"></div>
+    <div class="add-btn-container">
+        <button class="add-main-btn" onclick="openAddModal()">＋ 새 일정 추가하기</button>
+    </div>
 </div>
 
 <div id="editModal" class="modal">
     <div class="modal-content">
         <h3 style="color:var(--ny-yellow)">일정 수정</h3>
         <p id="target-task" style="font-weight:bold;"></p>
-        <textarea id="editRef" rows="4" placeholder="메모를 입력하세요."></textarea>
+        <textarea id="editRef" rows="4"></textarea>
         <button class="save-btn" onclick="saveEdit()">저장하기</button>
         <button onclick="closeModal('editModal')" style="width:100%; margin-top:10px; background:none; border:none; color:#999;">취소</button>
     </div>
@@ -106,6 +118,25 @@
 </div>
 
 <script>
+    const CORRECT_PW = "2778";
+
+    function checkPassword() {
+        const input = document.getElementById('password').value;
+        if(input === CORRECT_PW) {
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            render();
+        } else {
+            alert("암호가 틀렸습니다. 다시 확인해 주세요.");
+            document.getElementById('password').value = '';
+        }
+    }
+
+    // Enter 키로도 로그인 가능하게 설정
+    document.getElementById('password').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') checkPassword();
+    });
+
     let travelData = [
         { id: 1, date: "2026. 10. 21", day: "수", time: "10:00", task: "인천 출발 (KE081)", ref: "터미널 2 / 가족별 항공권 확인", links: [{ name: "임세호 e-Ticket", url: "/sources/de_sh.pdf", type: "pdf" }, { name: "방수진 e-Ticket", url: "/sources/de_sj.pdf", type: "pdf" }, { name: "임지우 e-Ticket", url: "/sources/de_ju.pdf", type: "pdf" }] },
         { id: 2, date: "2026. 10. 21", day: "수", time: "11:00", task: "뉴욕 JFK 도착", ref: "터미널 1" },
@@ -125,7 +156,7 @@
         { id: 16, date: "2026. 11. 3", day: "화", task: "", ref: "" },
         { id: 17, date: "2026. 11. 4", day: "수", task: "", ref: "" },
         { id: 18, date: "2026. 11. 5", day: "목", task: "", ref: "" },
-        { id: 19, date: "2026. 11. 6", day: "금", time: "11:50", task: "워싱턴 IAD 출발 (KE094)", ref: "귀국편" },
+        { id: 19, date: "2026. 11. 6", day: "금", time: "11:50", task: "워싱턴 IAD 출발 (KE094)", ref: "가족별 항공권 확인 (귀국편)", links: [{ name: "임세호 e-Ticket", url: "/sources/de_sh.pdf", type: "pdf" }, { name: "방수진 e-Ticket", url: "/sources/de_sj.pdf", type: "pdf" }, { name: "임지우 e-Ticket", url: "/sources/de_ju.pdf", type: "pdf" }] },
         { id: 20, date: "2026. 11. 7", day: "토", time: "17:40", task: "인천 도착", ref: "고생하셨습니다!" }
     ];
 
@@ -212,8 +243,6 @@
             }
         }
     }
-
-    render();
 </script>
 </body>
 </html>
