@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>지우네 가족 미국여행 2026🗽</title>
+    <style>
+        :root { 
+            --ny-yellow: #F7B733; 
+            --ny-black: #1a1a1a; 
+            --card-bg: linear-gradient(145deg, #2c2c2e, #1c1c1e);
+        }
+        * { box-sizing: border-box; font-family: 'Pretendard', -apple-system, sans-serif; }
+        
+        body { 
+            background-color: var(--ny-yellow); 
+            margin: 0; padding: 20px; padding-bottom: 120px; color: var(--ny-black);
+            min-height: 100vh;
+        }
+        
+        .header { text-align: center; margin-bottom: 30px; padding: 20px 0; }
+        .header h1 { font-size: 1.8rem; font-weight: 900; color: var(--ny-black); margin: 0; }
+
+        .timeline { max-width: 500px; margin: 0 auto; }
+
+        .day-card {
+            background: var(--card-bg); border-radius: 22px; margin-bottom: 20px;
+            padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .date-label { 
+            font-weight: 800; color: var(--ny-yellow); margin-bottom: 15px; 
+            display: inline-block; border-bottom: 2px solid var(--ny-yellow); 
+            padding-bottom: 4px; font-size: 1.1rem;
+        }
+        
+        .schedule-item { 
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px; border-radius: 15px; background: rgba(255,255,255,0.05); 
+            margin-bottom: 10px; cursor: pointer; transition: 0.3s;
+        }
+        .schedule-item:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+        
+        .info-area { flex-grow: 1; }
+        .time { font-size: 0.85rem; color: var(--ny-yellow); font-weight: 700; }
+        .task { font-size: 1.05rem; font-weight: 600; display: block; margin-top: 4px; color: #eee; }
+        
+        .edit-icon { padding: 10px; margin-left: 10px; font-size: 1rem; border-radius: 50%; background: rgba(255,255,255,0.1); cursor: pointer; }
+        .empty-day { color: #888; font-style: italic; font-size: 0.9rem; padding: 12px; display: flex; justify-content: space-between; align-items: center;}
+
+        /* Floating Add Button */
+        .add-btn-container {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 500px; z-index: 900;
+        }
+        .add-main-btn {
+            width: 100%; padding: 18px; background: var(--ny-black); color: var(--ny-yellow);
+            border: none; border-radius: 18px; font-weight: 900; font-size: 1.1rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4); cursor: pointer;
+        }
+
+        /* Modal */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .modal-content { background: #2c2c2e; padding: 25px; border-radius: 25px; width: 90%; max-width: 400px; color: white; border: 1px solid rgba(255,255,255,0.1); }
+        textarea, input { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #444; border-radius: 12px; background: #1c1c1e; color: white; font-size: 1rem; }
+        .save-btn { width: 100%; padding: 15px; background: var(--ny-yellow); color: black; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; }
+        
+        .btn-group { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+        .action-link { display: block; text-align: center; padding: 14px; background: #3a3a3c; color: white; text-decoration: none; border-radius: 12px; font-weight: 700; border: 1px solid #48484a; }
+        .map-link { background: #2e7d32; border: none; }
+        .web-link { background: var(--ny-yellow); color: black; border: none; }
+        .img-link { background: #1a73e8; border: none; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>지우네 가족 미국여행 2026🗽</h1>
+</div>
+
+<div class="timeline" id="timeline"></div>
+
+<div class="add-btn-container">
+    <button class="add-main-btn" onclick="openAddModal()">＋ 새 일정 추가하기</button>
+</div>
+
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <h3 style="color:var(--ny-yellow)">일정 수정</h3>
+        <p id="target-task" style="font-weight:bold;"></p>
+        <textarea id="editRef" rows="4" placeholder="메모를 입력하세요."></textarea>
+        <button class="save-btn" onclick="saveEdit()">저장하기</button>
+        <button onclick="closeModal('editModal')" style="width:100%; margin-top:10px; background:none; border:none; color:#999;">취소</button>
+    </div>
+</div>
+
+<div id="refModal" class="modal">
+    <div class="modal-content">
+        <h3 id="ref-title" style="color:var(--ny-yellow)"></h3>
+        <div id="ref-text" style="background:rgba(0,0,0,0.2); padding:15px; border-radius:12px; margin-bottom:15px; white-space:pre-wrap;"></div>
+        <div id="action-button-area" class="btn-group"></div>
+        <button onclick="closeModal('refModal')" style="width:100%; margin-top:15px; padding:15px; background:rgba(255,255,255,0.1); border:none; border-radius:12px; color:white; font-weight:bold;">닫기</button>
+    </div>
+</div>
+
+<script>
+    let travelData = [
+        { id: 1, date: "2026. 10. 21", day: "수", time: "10:00", task: "인천 출발 (KE081)", ref: "터미널 2 / 가족별 항공권 확인", links: [{ name: "임세호 e-Ticket", url: "/sources/de_sh.pdf", type: "pdf" }, { name: "방수진 e-Ticket", url: "/sources/de_sj.pdf", type: "pdf" }, { name: "임지우 e-Ticket", url: "/sources/de_ju.pdf", type: "pdf" }] },
+        { id: 2, date: "2026. 10. 21", day: "수", time: "11:00", task: "뉴욕 JFK 도착", ref: "터미널 1" },
+        { id: 3, date: "2026. 10. 22", day: "목", time: "17:00", task: "엣지 전망대", ref: "입장 시 PDF 티켓 제시", links: [{ name: "엣지 티켓(PDF)", url: "/sources/edge.pdf", type: "pdf" }, { name: "위치 보기", url: "https://maps.app.goo.gl/8ec5cptZvhSBtyJk7", type: "map" }] },
+        { id: 4, date: "2026. 10. 23", day: "금", task: "", ref: "" },
+        { id: 5, date: "2026. 10. 24", day: "토", time: "17:00", task: "자유의 여신상 크루즈", ref: "선착장 확인 및 티켓 지참", links: [{ name: "임세호&방수진 티켓", url: "/sources/cruise1.pdf", type: "pdf" }, { name: "임지우 티켓", url: "/sources/cruise2.pdf", type: "pdf" }, { name: "선착장 위치", url: "https://maps.app.goo.gl/pZyDpjzPLUT3hEJn9", type: "map" }, { name: "공식 홈페이지", url: "https://www.circleline.com/sightseeing-cruises/statue-of-liberty/downtown-statue-at-sunset", type: "web" }] },
+        { id: 6, date: "2026. 10. 25", day: "일", task: "", ref: "" },
+        { id: 7, date: "2026. 10. 26", day: "월", time: "10:00", task: "메트로폴리탄 미술관", ref: "이 날 아무때나 관람가능", links: [{ name: "미술관 티켓(PDF)", url: "/sources/met.pdf", type: "pdf" }, { name: "위치 보기", url: "https://maps.app.goo.gl/TzJCy8PThVtAfcHy6", type: "map" }] },
+        { id: 8, date: "2026. 10. 27", day: "화", time: "18:00", task: "서밋 전망대", ref: "누르면 티켓 이미지가 크게 뜹니다.", links: [{ name: "서밋 티켓 1(JPG)", url: "/sources/summit1.jpg", type: "img" }, { name: "서밋 티켓 2(JPG)", url: "/sources/summit2.jpg", type: "img" }, { name: "위치 보기", url: "https://maps.app.goo.gl/zgBeo4VBY4R6rupM8", type: "map" }] },
+        { id: 9, date: "2026. 10. 28", day: "수", time: "19:00", task: "빅버스 나이트 투어", ref: "오후 6:30 까지 Stop #1 (M&Ms World @ 7th Ave. and West 48th St)에서 대기", links: [{ name: "티켓 1", url: "/sources/bigbus1.jpg", type: "img" }, { name: "티켓 2", url: "/sources/bigbus2.jpg", type: "img" }, { name: "티켓 3", url: "/sources/bigbus3.jpg", type: "img" }, { name: "승차장 위치", url: "https://maps.app.goo.gl/uDyZo1gvzhVTVZSe8", type: "map" }, { name: "홈페이지", url: "https://www.bigbustours.com/en/new-york/new-york-night-tour-ticket", type: "web" }] },
+        { id: 10, date: "2026. 10. 29", day: "목", time: "14:55", task: "뉴욕 출발 (LGA)", ref: "항공편: DELTA 5709 / 예약번호: GNC8HQ / 추가 수하물 구입해야함" },
+        { id: 11, date: "2026. 10. 29", day: "목", time: "16:24", task: "워싱턴 DCA 도착", ref: "" },
+        { id: 12, date: "2026. 10. 30", day: "금", task: "", ref: "" },
+        { id: 13, date: "2026. 10. 31", day: "토", task: "", ref: "" },
+        { id: 14, date: "2026. 11. 1", day: "일", task: "", ref: "" },
+        { id: 15, date: "2026. 11. 2", day: "월", task: "", ref: "" },
+        { id: 16, date: "2026. 11. 3", day: "화", task: "", ref: "" },
+        { id: 17, date: "2026. 11. 4", day: "수", task: "", ref: "" },
+        { id: 18, date: "2026. 11. 5", day: "목", task: "", ref: "" },
+        { id: 19, date: "2026. 11. 6", day: "금", time: "11:50", task: "워싱턴 IAD 출발 (KE094)", ref: "귀국편" },
+        { id: 20, date: "2026. 11. 7", day: "토", time: "17:40", task: "인천 도착", ref: "고생하셨습니다!" }
+    ];
+
+    let currentEditId = null;
+
+    function render() {
+        const timeline = document.getElementById('timeline');
+        timeline.innerHTML = '';
+        const groups = travelData.reduce((acc, item) => {
+            const key = item.date + ` (${item.day})`;
+            if (!acc[key]) acc[key] = [];
+            acc[key].push(item);
+            return acc;
+        }, {});
+
+        for (const dateLabel in groups) {
+            const dateBox = document.createElement('div');
+            dateBox.className = 'day-card';
+            dateBox.innerHTML = `<span class="date-label">${dateLabel}</span>`;
+            groups[dateLabel].forEach(item => {
+                const div = document.createElement('div');
+                if(item.task) {
+                    div.className = 'schedule-item';
+                    div.innerHTML = `<div class="info-area" onclick="showRef(${item.id})"><span class="time">${item.time || ''}</span><span class="task">${item.task}</span></div><span class="edit-icon" onclick="openEdit(${item.id}, event)">✏️</span>`;
+                } else {
+                    div.className = 'empty-day';
+                    div.innerHTML = `<span>미정</span><span class="edit-icon" onclick="openEdit(${item.id}, event)">✏️</span>`;
+                }
+                dateBox.appendChild(div);
+            });
+            timeline.appendChild(dateBox);
+        }
+    }
+
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+    function openEdit(id, event) {
+        event.stopPropagation();
+        const item = travelData.find(d => d.id === id);
+        currentEditId = id;
+        document.getElementById('target-task').innerText = item.task || "새 일정 입력";
+        document.getElementById('editRef').value = item.ref;
+        openModal('editModal');
+    }
+
+    function saveEdit() {
+        const idx = travelData.findIndex(d => d.id === currentEditId);
+        if(!travelData[idx].task) {
+            const name = prompt("일정 제목:");
+            if(name) travelData[idx].task = name;
+        }
+        travelData[idx].ref = document.getElementById('editRef').value;
+        render();
+        closeModal('editModal');
+    }
+
+    function showRef(id) {
+        const item = travelData.find(d => d.id === id);
+        document.getElementById('ref-title').innerText = item.task;
+        document.getElementById('ref-text').innerText = item.ref || "메모가 없습니다.";
+        const btnArea = document.getElementById('action-button-area');
+        btnArea.innerHTML = '';
+        if(item.links) {
+            item.links.forEach(link => {
+                const a = document.createElement('a');
+                a.href = link.url; a.target = "_blank"; a.className = `action-link ${link.type}-link`;
+                let icon = link.type === 'map' ? '📍 ' : link.type === 'img' ? '🖼️ ' : link.type === 'web' ? '🌐 ' : '📄 ';
+                a.innerText = icon + link.name;
+                btnArea.appendChild(a);
+            });
+        }
+        openModal('refModal');
+    }
+
+    function openAddModal() {
+        const date = prompt("날짜 (예: 2026. 10. 30):");
+        if(date) {
+            const task = prompt("일정 내용:");
+            if(task) {
+                travelData.push({ id: Date.now(), date: date, day: "", task: task, ref: "" });
+                travelData.sort((a, b) => new Date(a.date.replace(/\. /g, '-')) - new Date(b.date.replace(/\. /g, '-')));
+                render();
+            }
+        }
+    }
+
+    render();
+</script>
+</body>
+</html>
