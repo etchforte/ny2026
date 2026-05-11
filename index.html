@@ -21,26 +21,6 @@
         .header { text-align: center; margin-bottom: 30px; padding: 20px 0; }
         .header h1 { font-size: 1.8rem; font-weight: 900; color: var(--ny-black); margin: 0; }
 
-        /* Password Section */
-        #login-section {
-            max-width: 400px; margin: 100px auto; text-align: center;
-            background: var(--card-bg); padding: 40px 20px; border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3); color: white;
-        }
-        .pw-input { 
-            width: 80%; padding: 15px; font-size: 1.2rem; text-align: center;
-            border-radius: 12px; border: 1px solid var(--ny-yellow);
-            background: #1c1c1e; color: white; margin-bottom: 20px;
-            letter-spacing: 5px;
-        }
-        .pw-btn {
-            width: 80%; padding: 15px; background: var(--ny-yellow); color: black;
-            border: none; border-radius: 12px; font-weight: 800; cursor: pointer;
-        }
-
-        /* Main Content (Hidden by default) */
-        #main-content { display: none; }
-
         .timeline { max-width: 500px; margin: 0 auto; }
         .day-card {
             background: var(--card-bg); border-radius: 22px; margin-bottom: 20px;
@@ -83,14 +63,6 @@
     <h1>지우네 가족 미국여행 2026🗽</h1>
 </div>
 
-<div id="login-section">
-    <h2 style="color: var(--ny-yellow); margin-top: 0;">Access Denied</h2>
-    <p>여행 일정을 보려면 암호를 입력하세요.</p>
-    <input type="password" id="password" class="pw-input" placeholder="****" maxlength="4">
-    <br>
-    <button class="pw-btn" onclick="checkPassword()">인증하기</button>
-</div>
-
 <div id="main-content">
     <div class="timeline" id="timeline"></div>
     <div class="add-btn-container">
@@ -118,25 +90,6 @@
 </div>
 
 <script>
-    const CORRECT_PW = "2778";
-
-    function checkPassword() {
-        const input = document.getElementById('password').value;
-        if(input === CORRECT_PW) {
-            document.getElementById('login-section').style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
-            render();
-        } else {
-            alert("암호가 틀렸습니다. 다시 확인해 주세요.");
-            document.getElementById('password').value = '';
-        }
-    }
-
-    // Enter 키로도 로그인 가능하게 설정
-    document.getElementById('password').addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') checkPassword();
-    });
-
     let travelData = [
         { id: 1, date: "2026. 10. 21", day: "수", time: "10:00", task: "인천 출발 (KE081)", ref: "터미널 2 / 가족별 항공권 확인", links: [{ name: "임세호 e-Ticket", url: "/sources/de_sh.pdf", type: "pdf" }, { name: "방수진 e-Ticket", url: "/sources/de_sj.pdf", type: "pdf" }, { name: "임지우 e-Ticket", url: "/sources/de_ju.pdf", type: "pdf" }] },
         { id: 2, date: "2026. 10. 21", day: "수", time: "11:00", task: "뉴욕 JFK 도착", ref: "터미널 1" },
@@ -243,6 +196,8 @@
             }
         }
     }
+    
+    render(); // 페이지 로드 시 바로 렌더링
 </script>
 </body>
 </html>
