@@ -1,0 +1,10 @@
+{
+  "description": "Explore New York with a user-friendly travel web app that offers curated itineraries, local tips, and essential information for an unforgettable trip.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
