@@ -625,7 +625,7 @@ export default function App() {
             lineHeight: 0.95, letterSpacing: '-0.01em',
             color: '#fff', margin: '0 0 12px',
           }}>
-            지우네 가족</br> 미국여행🗽
+            지우네 가족 <br /> 미국여행🗽
           </h1>
           <div style={{ display: 'flex', gap: 16 }}>
             {[{ label: '출발', val: '10.21' }, { label: '귀국', val: '11.7' }, { label: '총', val: '18일' }].map(s => (
