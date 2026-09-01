@@ -617,7 +617,7 @@ export default function App() {
             color: '#F7B733', fontSize: 11, fontWeight: 700,
             letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 14,
           }}>
-            ✈ Oct 21 – Nov 7, 2026 · New York & Washington
+            ✈ New York & Washington
           </div>
           <h1 style={{
             fontFamily: "'Barlow Condensed', sans-serif",
